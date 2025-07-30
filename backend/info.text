@@ -1,0 +1,5 @@
+Dependencies:
+
+    npm init -y
+    npm install express mongoose dotenv cors helmet bcrypt jsonwebtoken express-validator
+    npm install -D nodemon
