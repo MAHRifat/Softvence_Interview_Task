@@ -117,8 +117,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 relative">
-      {/* Top Background */}
-      <div className="relative w-full h-[306px] bg-gradient-to-r from-[#040612] to-[#60E5AE] overflow-hidden">
+      <div className="relative w-full h-[306px] bg-gradient-to-r from-[#60E5AE] to-[#040612] overflow-hidden">
         <img
           src="/login_img.png"
           alt="Top Illustration"
@@ -126,7 +125,6 @@ const Dashboard = () => {
         />
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} user={user} />
 
-        {/* Greeting */}
         {!showAddTask && (
           <div className="mt-20 md:mt-24 px-6 md:px-16">
             <h2 className="text-lg text-[#60E5AE]">Hi {user?.name || 'User'}</h2>
@@ -135,7 +133,6 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* Confirm Dialog Overlay */}
       {showConfirm && (
         <ConfirmDialog
           onClose={() => setShowConfirm(false)}
@@ -143,20 +140,25 @@ const Dashboard = () => {
         />
       )}
 
-      {/* Main Section */}
       {activeTab === 'task' && (
-        <div className="flex justify-center px-[20px] md:px-[60px] w-full absolute top-[240px] left-1/2 transform -translate-x-1/2 z-10">
-          <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-6 md:px-[60px] pt-[60px] pb-[60px] h-[calc(100vh-270px)] overflow-y-auto">
-            {showAddTask ? (
-              <AddTask
-                onClose={() => setShowAddTask(false)}
-                onTaskAdded={fetchTasks}
-              />
-            ) : (
-              <>
+        <>
+          {showAddTask ? (
+            <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4 md:px-10">
+              <div className="bg-white rounded-xl shadow-xl max-w-[1320px] w-full max-h-[90vh] overflow-auto p-6">
+                <AddTask
+                  onClose={() => setShowAddTask(false)}
+                  onTaskAdded={() => {
+                    fetchTasks();
+                    setShowAddTask(false);
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-center px-[20px] md:px-[60px] w-full absolute top-[240px] left-1/2 transform -translate-x-1/2 z-10">
+              <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-6 md:px-[60px] pt-[60px] pb-[60px] h-[calc(100vh-270px)] overflow-y-auto relative">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
                   <h2 className="text-xl font-semibold text-black">All Task</h2>
-
                   <div className="flex flex-wrap gap-4 items-center relative z-10">
                     {/* Category Filter */}
                     <div className="relative">
@@ -183,7 +185,6 @@ const Dashboard = () => {
                                   setCategoryFilter(cat);
                                   setShowCategoryDropdown(false);
                                 }}
-
                               />
                               {cat}
                             </label>
@@ -226,7 +227,6 @@ const Dashboard = () => {
                                   setStatusFilter(status.value);
                                   setShowStatusDropdown(false);
                                 }}
-
                               />
                               {status.label}
                             </label>
@@ -237,7 +237,6 @@ const Dashboard = () => {
                               setStatusFilter('');
                               setShowStatusDropdown(false);
                             }}
-
                           >
                             Clear Filter
                           </div>
@@ -245,7 +244,6 @@ const Dashboard = () => {
                       )}
                     </div>
 
-                    {/* Add Task Button */}
                     <button
                       onClick={() => setShowAddTask(true)}
                       className="bg-[#60E5AE] hover:bg-[#4ed1a3] text-white font-semibold px-5 py-2 rounded-md"
@@ -275,10 +273,10 @@ const Dashboard = () => {
                     ))}
                   </div>
                 )}
-              </>
-            )}
-          </div>
-        </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

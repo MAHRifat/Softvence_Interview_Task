@@ -6,7 +6,7 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import Navbar from '../components/Navbar';
 import EditTask from '../components/EditTask';
 import ConfirmDialog from '../components/ConfirmDialog';
-import TaskCompleteDialog from '../components/TaskCompleteDialog'; // ✅
+import TaskCompleteDialog from '../components/TaskCompleteDialog';
 
 const statusColors = {
   pending: '#E343E6',
@@ -24,7 +24,7 @@ const TaskDetails = () => {
   const [user, setUser] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [showComplete, setShowComplete] = useState(false); // ✅
+  const [showComplete, setShowComplete] = useState(false);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -71,7 +71,7 @@ const TaskDetails = () => {
     });
 
     if (status === 'done') {
-      setShowComplete(true); // ✅ Show completion dialog
+      setShowComplete(true);
     } else {
       navigate('/dashboard');
     }
@@ -118,7 +118,7 @@ const TaskDetails = () => {
         />
       )}
 
-      {/* ✅ Task Completion Dialog */}
+      {/* Task Complete Dialog */}
       {showComplete && (
         <TaskCompleteDialog
           onClose={() => {
@@ -128,14 +128,27 @@ const TaskDetails = () => {
         />
       )}
 
-      {/* Main Section */}
+      {/* Main Box */}
       <div className="flex justify-center px-4 md:px-10 w-full absolute top-[140px] left-1/2 transform -translate-x-1/2 z-10">
-        <div className="w-[96%] max-w-[1320px] bg-white rounded-xl shadow-xl px-6 md:px-12 pt-12 pb-16 min-h-[78vh] relative overflow-hidden">
+        <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-4 md:px-12 pt-10 pb-20 min-h-[calc(100vh-180px)] max-h-[calc(100vh-180px)] overflow-y-scroll scrollbar-hide relative">
 
-          {showEdit && (
+          {/* Optional scrollbar hide (Tailwind Plugin or manual CSS below) */}
+          <style>
+            {`
+              .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+              }
+              .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+              }
+            `}
+          </style>
+
+          {showEdit ? (
             <>
               <div className="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 rounded-xl" />
-              <div className="absolute inset-0 z-20 px-6 md:px-12 pt-12 pb-16 overflow-auto">
+              <div className="absolute inset-0 z-20 px-4 md:px-12 pt-12 pb-16 overflow-auto">
                 <EditTask
                   task={task}
                   onClose={() => setShowEdit(false)}
@@ -147,22 +160,20 @@ const TaskDetails = () => {
                 />
               </div>
             </>
-          )}
-
-          {!showEdit && (
+          ) : (
             <>
-              <div className="flex justify-between items-center mb-6">
+              <div className="flex flex-wrap justify-between items-center mb-6">
                 <h2 className="text-xl font-bold text-gray-800">Task Details</h2>
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-3 md:mt-0">
                   <button
                     onClick={() => setShowEdit(true)}
-                    className="bg-[#FFAB001A] text-[#FFAB00] px-4 py-1 rounded-md text-sm hover:bg-[#e4ce8b85] w-28"
+                    className="bg-[#FFAB001A] text-[#FFAB00] px-4 py-1 rounded-md text-sm hover:bg-[#e4ce8b85]"
                   >
                     <AiOutlineEdit className="inline-block mr-1" /> Edit Task
                   </button>
                   <button
                     onClick={() => navigate('/dashboard')}
-                    className="bg-green-100 text-green-700 px-4 py-1.5 rounded-md text-sm hover:bg-green-200 w-30"
+                    className="bg-green-100 text-green-700 px-4 py-1.5 rounded-md text-sm hover:bg-green-200"
                   >
                     Back
                   </button>
@@ -171,14 +182,16 @@ const TaskDetails = () => {
 
               <hr className="border-gray-300 mb-6" />
 
-              <div className="flex gap-6 items-start mb-4">
-                <div className="bg-[#60E5AE] p-4 rounded-full text-white text-3xl">
+              <div className="flex flex-col md:flex-row gap-6 items-start mb-4">
+                <div className="bg-[#60E5AE] p-4 rounded-full text-white text-3xl self-start">
                   <FaClipboardList />
                 </div>
 
-                <div className="flex-1">
+                <div className="flex-1 overflow-hidden">
                   <h3 className="font-bold text-gray-800 mb-1 text-2xl">{task.category}</h3>
-                  <p className="text-gray-600 mb-4 text-sm">{task.description}</p>
+                  <p className="text-gray-600 mb-4 text-sm break-words whitespace-pre-wrap">
+                    {task.description}
+                  </p>
 
                   <div className="flex flex-wrap gap-8 items-start mb-6 mt-12">
                     <div>
@@ -232,16 +245,16 @@ const TaskDetails = () => {
                 </div>
               </div>
 
-              <div className="absolute right-7 bottom-10 flex gap-4">
+              <div className="flex flex-wrap justify-end gap-4 mt-10">
                 <button
                   onClick={() => setShowConfirm(true)}
-                  className="bg-red-100 text-red-600 px-6 py-1 rounded-md font-medium hover:bg-red-200 w-36"
+                  className="bg-red-100 text-red-600 px-6 py-1 rounded-md font-medium hover:bg-red-200"
                 >
                   Delete Task
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="bg-[#60E5AE] text-white px-6 py-1 rounded-md font-semibold hover:bg-[#49c59c] w-36"
+                  className="bg-[#60E5AE] text-white px-6 py-1 rounded-md font-semibold hover:bg-[#49c59c]"
                 >
                   Submit
                 </button>

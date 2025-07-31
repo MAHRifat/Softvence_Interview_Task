@@ -5,14 +5,13 @@ const AddTask = ({ onClose, onTaskAdded }) => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('Nature');
   const [status, setStatus] = useState('pending');
-  const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const token = localStorage.getItem('token');
+
     if (!token) {
       setError('Unauthorized. Please log in.');
       return;
@@ -25,11 +24,10 @@ const AddTask = ({ onClose, onTaskAdded }) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title, description, category, status, startDate, endDate }),
+        body: JSON.stringify({ title, description, category, status, endDate }),
       });
 
       const data = await res.json();
-
       if (!res.ok) {
         setError(data.message || 'Task creation failed.');
         return;
@@ -43,9 +41,9 @@ const AddTask = ({ onClose, onTaskAdded }) => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-270px)] justify-center px-[20px] md:px-[60px] -mt-[20px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%] w-full">
-      <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-6 md:px-[60px] pt-[40px] pb-[60px] z-10">
-        <h2 className="text-2xl font-semibold text-center mb-8 text-gray-800">Add New Task</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 bg-opacity-70 backdrop-blur-sm px-6">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-[1320px] max-h-[90vh] overflow-auto px-6 md:px-[60px] pt-[60px] pb-[60px] relative">
+        <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Add New Task</h2>
 
         {error && (
           <div className="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded">
@@ -53,35 +51,35 @@ const AddTask = ({ onClose, onTaskAdded }) => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6 max-w-xl mx-auto text-black">
+        <form onSubmit={handleSubmit} className="space-y-6 text-black">
           <div>
-            <label className="block text-gray-700 mb-1">Title</label>
+            <label className="block mb-1 text-gray-700">Title</label>
             <input
               type="text"
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full border border-gray-300 rounded px-4 py-2"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1">Description</label>
+            <label className="block mb-1 text-gray-700">Description</label>
             <textarea
               required
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full border border-gray-300 rounded px-4 py-2"
             />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1">
-              <label className="block text-gray-700 mb-1">Select Category</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block mb-1 text-gray-700">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                className="w-full border border-gray-300 rounded px-4 py-2"
               >
                 <option>Arts and Craft</option>
                 <option>Nature</option>
@@ -92,12 +90,12 @@ const AddTask = ({ onClose, onTaskAdded }) => {
               </select>
             </div>
 
-            <div className="flex-1">
-              <label className="block text-gray-700 mb-1">Status</label>
+            <div>
+              <label className="block mb-1 text-gray-700">Status</label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                className="w-full border border-gray-300 rounded px-4 py-2"
               >
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
@@ -107,30 +105,27 @@ const AddTask = ({ onClose, onTaskAdded }) => {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1">
-              <label className="block text-gray-700 mb-1">End Date</label>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md"
-              />
-            </div>
+          <div>
+            <label className="block mb-1 text-gray-700">End Date</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="w-full border border-gray-300 rounded px-4 py-2"
+            />
           </div>
 
-          <div className="flex items-center justify-between mt-2">
+          <div className="absolute right-10 bottom-8 flex gap-4">
             <button
               type="button"
               onClick={onClose}
-              className="bg-red-100 text-red-600 hover:bg-red-200 px-4 py-2 rounded"
+              className="bg-red-100 text-red-700 px-6 py-1 rounded-md font-medium hover:bg-red-200 w-30"
             >
               Cancel
             </button>
-
             <button
               type="submit"
-              className="bg-[#60E5AE] hover:bg-[#4ed1a3] text-white px-6 py-2 rounded-md font-semibold"
+              className="bg-[#60E5AE] text-white px-6 py-1 rounded-md font-semibold hover:bg-[#4ed1a3] w-36"
             >
               Add Task
             </button>

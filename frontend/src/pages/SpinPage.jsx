@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
-import { FaSpinner } from 'react-icons/fa';
 
 const categories = [
     'Arts and Craft',
@@ -61,38 +60,37 @@ const SpinPage = () => {
     };
 
     if (loading) {
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-[#040612] to-[#60E5AE] flex items-center justify-center">
-            <div className="flex flex-col items-center gap-4">
-                <svg
-                    className="animate-spin h-10 w-10 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                    ></circle>
-                    <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                    ></path>
-                </svg>
-                <p className="text-white text-lg font-medium">Loading user data...</p>
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-[#040612] to-[#60E5AE] flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <svg
+                        className="animate-spin h-10 w-10 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
+                        <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                        ></circle>
+                        <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                        ></path>
+                    </svg>
+                    <p className="text-white text-lg font-medium">Loading user data...</p>
+                </div>
             </div>
-        </div>
-    );
-}
-
+        );
+    }
 
     return (
-        <div className="min-h-screen bg-gray-100 relative">
+        <div className="min-h-screen bg-gray-100 relative overflow-x-hidden">
             {/* Top Background */}
             <div className="relative w-full h-[174px] bg-gradient-to-l from-[#040612] to-[#135e3f] overflow-hidden">
                 <img
@@ -104,8 +102,8 @@ const SpinPage = () => {
             </div>
 
             {/* Main Box */}
-            <div className="flex justify-center px-4 md:px-10 w-full absolute top-[140px] left-1/2 transform -translate-x-1/2 z-10">
-                <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-4 sm:px-8 lg:px-12 pt-8 pb-12 min-h-[78vh] relative overflow-hidden">
+            <div className="flex justify-center px-2 sm:px-4 md:px-8 w-full absolute top-[140px] left-1/2 transform -translate-x-1/2 z-10">
+                <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-4 sm:px-6 md:px-10 pt-8 pb-12 min-h-[78vh] overflow-hidden">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-6 mb-8">
                         <h2 className="text-xl font-bold text-gray-800">Spin Wheel</h2>
@@ -126,7 +124,6 @@ const SpinPage = () => {
                                 ))}
                             </select>
 
-                            {/* Color Legend */}
                             <div className="mt-4 space-y-1 text-sm">
                                 {categories.map((cat) => (
                                     <div key={cat} className="flex items-center gap-2">
@@ -142,9 +139,9 @@ const SpinPage = () => {
                     </div>
 
                     {/* Wheel */}
-                    <div className="flex flex-col items-center mt-6">
-                        <div className="relative">
-                            {/* Pointer Image (Top Center) */}
+                    <div className="flex flex-col items-center mt-6 w-full overflow-x-auto">
+                        <div className="relative w-[280px] h-[280px] sm:w-[280px] sm:h-[280px]">
+                            {/* Pointer Image */}
                             <div className="absolute top-full left-1/2 transform -translate-x-1/2 z-20">
                                 <img
                                     src="/pointer_img.png"
@@ -155,7 +152,7 @@ const SpinPage = () => {
 
                             {/* Wheel */}
                             <div
-                                className="w-[280px] h-[280px] rounded-full border-[10px] border-[#DD3F20] transition-all duration-[3000ms] ease-out"
+                                className="w-full h-full rounded-full border-[10px] border-[#DD3F20] transition-all duration-[3000ms] ease-out"
                                 style={{
                                     transform: `rotate(${rotation}deg)`,
                                     background: `conic-gradient(
@@ -178,7 +175,7 @@ const SpinPage = () => {
                         </p>
 
                         {/* Buttons */}
-                        <div className="mt-4 flex flex-col sm:flex-row gap-4 items-center ">
+                        <div className="mt-4 flex flex-col sm:flex-row gap-4 items-center">
                             <button
                                 onClick={spinWheel}
                                 disabled={isSpinning}
