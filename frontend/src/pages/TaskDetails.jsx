@@ -29,7 +29,7 @@ const TaskDetails = () => {
   useEffect(() => {
     const fetchTask = async () => {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+      const res = await fetch(`https://tasko-l7bf.onrender.com/api/tasks/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -39,7 +39,7 @@ const TaskDetails = () => {
 
     const fetchUser = async () => {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/users/profile`, {
+      const res = await fetch(`https://tasko-l7bf.onrender.com/api/users/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -52,7 +52,7 @@ const TaskDetails = () => {
 
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:5000/api/tasks/${id}`, {
+    await fetch(`https://tasko-l7bf.onrender.com/api/tasks/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -61,7 +61,7 @@ const TaskDetails = () => {
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:5000/api/tasks/${id}`, {
+    await fetch(`https://tasko-l7bf.onrender.com/api/tasks/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ const TaskDetails = () => {
               <div className="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 rounded-xl" />
               <div className="absolute inset-0 z-20 px-6 md:px-12 pt-12 pb-16 overflow-auto">
                 <EditTask
-                  taskId={id}
+                  task={task}
                   onClose={() => setShowEdit(false)}
                   onTaskUpdated={(updatedTask) => {
                     setTask(updatedTask);

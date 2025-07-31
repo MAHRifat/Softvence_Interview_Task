@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'https://tasko-l7bf.onrender.com/api';
 
 export const signupUser = async (data) => {
   const res = await fetch(`${BASE_URL}/users/signup`, {

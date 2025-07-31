@@ -29,13 +29,13 @@ const Dashboard = () => {
 
     const fetchData = async () => {
       try {
-        const userRes = await fetch('http://localhost:5000/api/users/profile', {
+        const userRes = await fetch('https://tasko-l7bf.onrender.com/api/users/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const userData = await userRes.json();
         setUser(userData);
 
-        const taskRes = await fetch('http://localhost:5000/api/tasks', {
+        const taskRes = await fetch('https://tasko-l7bf.onrender.com/api/tasks', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const taskData = await taskRes.json();
@@ -53,7 +53,7 @@ const Dashboard = () => {
 
   const fetchTasks = () => {
     const token = localStorage.getItem('token');
-    fetch('http://localhost:5000/api/tasks', {
+    fetch('https://tasko-l7bf.onrender.com/api/tasks', {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -69,7 +69,7 @@ const Dashboard = () => {
   const handleConfirmDelete = async () => {
     const token = localStorage.getItem('token');
     try {
-      await fetch(`http://localhost:5000/api/tasks/${taskToDelete}`, {
+      await fetch(`https://tasko-l7bf.onrender.com/api/tasks/${taskToDelete}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });

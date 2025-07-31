@@ -1,59 +1,22 @@
 // components/EditTask.js
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-const Spinner = () => (
-  <div className="flex flex-col items-center justify-center h-[78vh] w-full text-center">
-    <svg
-      className="animate-spin h-12 w-12 text-[#60E5AE] mb-4"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      ></circle>
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-      ></path>
-    </svg>
-    <p className="text-gray-500 text-lg font-medium">Loading task details...</p>
-  </div>
-);
-
-const EditTask = ({ taskId, onClose, onTaskUpdated }) => {
-  const [task, setTask] = useState(null);
+const EditTask = ({ task, onClose, onTaskUpdated }) => {
+  const [editedTask, setEditedTask] = useState(task);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchTask = async () => {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      setTask(data);
-    };
-    fetchTask();
-  }, [taskId]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
+
     try {
-      const res = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+      const res = await fetch(`https://tasko-l7bf.onrender.com/api/tasks/${editedTask._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(task),
+        body: JSON.stringify(editedTask),
       });
 
       const updatedTask = await res.json();
@@ -70,37 +33,6 @@ const EditTask = ({ taskId, onClose, onTaskUpdated }) => {
     }
   };
 
-  if (!task) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-[#040612] to-[#60E5AE]">
-      <div className="flex flex-col items-center gap-4">
-        <svg
-          className="animate-spin h-10 w-10 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-          ></path>
-        </svg>
-        <p className="text-white text-lg font-medium">Loading task details...</p>
-      </div>
-    </div>
-  );
-}
-
-
   return (
     <div className="inset-0 z-50 flex items-center fixed justify-center bg-opacity-70">
       <div className="bg-white rounded-xl shadow-xl w-[92%] max-w-[1320px] px-6 md:px-12 pt-12 pb-16 min-h-[78vh] max-h-[78vh] relative overflow-hidden">
@@ -112,8 +44,8 @@ const EditTask = ({ taskId, onClose, onTaskUpdated }) => {
             <label className="block mb-1 text-gray-700">Title</label>
             <input
               type="text"
-              value={task.title}
-              onChange={(e) => setTask({ ...task, title: e.target.value })}
+              value={editedTask.title}
+              onChange={(e) => setEditedTask({ ...editedTask, title: e.target.value })}
               className="w-full border border-gray-300 rounded px-4 py-2"
               required
             />
@@ -122,8 +54,8 @@ const EditTask = ({ taskId, onClose, onTaskUpdated }) => {
           <div>
             <label className="block mb-1 text-gray-700">Description</label>
             <textarea
-              value={task.description}
-              onChange={(e) => setTask({ ...task, description: e.target.value })}
+              value={editedTask.description}
+              onChange={(e) => setEditedTask({ ...editedTask, description: e.target.value })}
               className="w-full border border-gray-300 rounded px-4 py-2"
               required
             />
@@ -133,8 +65,8 @@ const EditTask = ({ taskId, onClose, onTaskUpdated }) => {
             <div>
               <label className="block mb-1 text-gray-700">Category</label>
               <select
-                value={task.category}
-                onChange={(e) => setTask({ ...task, category: e.target.value })}
+                value={editedTask.category}
+                onChange={(e) => setEditedTask({ ...editedTask, category: e.target.value })}
                 className="w-full border border-gray-300 rounded px-4 py-2"
               >
                 <option>Arts and Craft</option>
@@ -149,8 +81,8 @@ const EditTask = ({ taskId, onClose, onTaskUpdated }) => {
             <div>
               <label className="block mb-1 text-gray-700">Status</label>
               <select
-                value={task.status}
-                onChange={(e) => setTask({ ...task, status: e.target.value })}
+                value={editedTask.status}
+                onChange={(e) => setEditedTask({ ...editedTask, status: e.target.value })}
                 className="w-full border border-gray-300 rounded px-4 py-2"
               >
                 <option value="pending">Pending</option>
@@ -165,8 +97,8 @@ const EditTask = ({ taskId, onClose, onTaskUpdated }) => {
             <label className="block mb-1 text-gray-700">End Date</label>
             <input
               type="date"
-              value={task.endDate?.slice(0, 10)}
-              onChange={(e) => setTask({ ...task, endDate: e.target.value })}
+              value={editedTask.endDate?.slice(0, 10)}
+              onChange={(e) => setEditedTask({ ...editedTask, endDate: e.target.value })}
               className="w-full border border-gray-300 rounded px-4 py-2"
             />
           </div>

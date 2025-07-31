@@ -22,7 +22,7 @@ const ResetPassword = () => {
 
     const fetchUser = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/users/profile', {
+        const res = await fetch('https://tasko-l7bf.onrender.com/api/users/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,7 +66,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/users/reset', {
+      const res = await fetch('https://tasko-l7bf.onrender.com/api/users/reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -33,7 +33,7 @@ const SpinPage = () => {
         const fetchUser = async () => {
             const token = localStorage.getItem('token');
             try {
-                const res = await fetch('http://localhost:5000/api/users/profile', {
+                const res = await fetch('https://tasko-l7bf.onrender.com/api/users/profile', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const data = await res.json();
