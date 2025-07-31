@@ -118,46 +118,52 @@ npm start       # Start in production
 
 ---
 
-📁 Folder Structure
+## 📁 Folder Structure
 
+```bash
 Softvence_Interview_Task/
-├── backend/         # Express API with MongoDB
-│   └── src/
-│       ├── config/
-│       │   └── db.config.js
-│       ├── controllers/
-│       │   ├── task.controller.js
-│       │   └── user.controller.js
-│       ├── middlewares/
-│       │   ├── auth.middleware.js
-│       │   └── error.middleware.js
-│       ├── models/
-│       │   ├── task.model.js
-│       │   └── user.model.js
-│       ├── routes/
-│       │   ├── task.routes.js
-│       │   └── user.routes.js
-│       ├── utils/
-│       │   └── email.validator.js
-│       └── app.js
+├── backend/                  # Express API with MongoDB
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── db.config.js
+│   │   ├── controllers/
+│   │   │   ├── task.controller.js
+│   │   │   └── user.controller.js
+│   │   ├── middlewares/
+│   │   │   ├── auth.middleware.js
+│   │   │   └── error.middleware.js
+│   │   ├── models/
+│   │   │   ├── task.model.js
+│   │   │   └── user.model.js
+│   │   ├── routes/
+│   │   │   ├── task.routes.js
+│   │   │   └── user.routes.js
+│   │   ├── utils/
+│   │   │   └── email.validator.js
+│   │   └── app.js
 │   └── index.js
 │
-├── frontend/        # React + Tailwind + Vite
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       ├── api.js
-│       ├── App.jsx
-│       └── main.jsx
+├── frontend/                 # React + Tailwind + Vite
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── api.js
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │   └── index.html
+│
 └── README.md
+```
 
-🙋 Author
+---
 
-Md Ahsanur Rahman RifatGitHub: @MAHRifat
+## 🙋 Author
 
-📄 License
+**Md Ahsanur Rahman Rifat**
+GitHub: [@MAHRifat](https://github.com/MAHRifat)
+
+---
+
+## 📄 License
 
 This project was developed for educational and interview use only.
-
-
