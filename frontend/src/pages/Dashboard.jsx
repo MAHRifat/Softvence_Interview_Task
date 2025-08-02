@@ -156,7 +156,20 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="flex justify-center px-[20px] md:px-[60px] w-full absolute top-[240px] left-1/2 transform -translate-x-1/2 z-10">
-              <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-6 md:px-[60px] pt-[60px] pb-[60px] h-[calc(100vh-270px)] overflow-y-auto relative">
+              <div className="w-full max-w-[1320px] bg-white rounded-xl shadow-xl px-6 md:px-[60px] pt-[60px] pb-[60px] h-[calc(100vh-270px)] overflow-y-auto scrollbar-hide relative">
+                {/* 👇 Hides the scrollbar but enables scroll */}
+                <style>
+                  {`
+                    .scrollbar-hide::-webkit-scrollbar {
+                      display: none;
+                    }
+                    .scrollbar-hide {
+                      -ms-overflow-style: none;
+                      scrollbar-width: none;
+                    }
+                  `}
+                </style>
+
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
                   <h2 className="text-xl font-semibold text-black">All Task</h2>
                   <div className="flex flex-wrap gap-4 items-center relative z-10">
